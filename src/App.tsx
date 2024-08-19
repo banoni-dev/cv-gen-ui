@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [text, setText] = useState("");
-
-  const handleClick = async () => {};
-
+  const [value, setValue] = useState("");
+  const handleClick = async () => {
+    try {
+      fetch("http://localhost:3000/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ jobDescription: value }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
-    <div className="App">
+    <>
       <textarea
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setText(e.target.value)
-        }
-        className="App-textarea"
-        placeholder="Type something here..."
+        cols={80}
+        rows={30}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       ></textarea>
-      <button onClick={handleClick} className="App-button">
-        Submit
-      </button>
-    </div>
+      <button onClick={handleClick}>Submit</button>
+    </>
   );
 }
 
