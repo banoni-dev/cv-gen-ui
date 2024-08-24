@@ -13,7 +13,6 @@ function App() {
       const { pdfPath } = response.data;
 
       if (pdfPath) {
-        console.log("PDF generated successfully", pdfPath);
         const downloadUrl = `http://localhost:3000/download-pdf/${pdfPath}`;
         const a = document.createElement("a");
         a.href = downloadUrl;
@@ -31,7 +30,14 @@ function App() {
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          width: "70vw",
+        }}
+      >
         <textarea
           cols={80}
           rows={30}
